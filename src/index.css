@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #05060a;
+  --color-ink-2: #0b0d14;
+  --color-ink-3: #12141d;
+  --color-line: #1e2130;
+  --color-pink: #ff1464;
+  --color-pink-hot: #ff0080;
+  --color-cyan: #00e5ff;
+  --color-cyan-edge: #7df9ff;
+  --color-lime: #c6ff2e;
+  --color-amber: #ffb020;
+  --color-chalk: #f2f3f7;
+  --color-mute: #8b91a7;
+
+  --font-display: "Anton", "Heebo", system-ui, sans-serif;
+  --font-sans: "Inter", "Heebo", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius-none: 0px;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-chalk);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+* {
+  border-radius: 0;
+}
+
+.pill {
+  border-radius: 999px;
+}
+
+.display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Keep $, ×, and decimals from being reordered under RTL */
+html[dir="rtl"] .mono {
+  unicode-bidi: isolate;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 11px;
+  color: var(--color-mute);
+}
+
+.glow-field {
+  background:
+    radial-gradient(60% 50% at 12% 0%, rgba(255, 20, 100, 0.16), transparent 70%),
+    radial-gradient(50% 45% at 92% 12%, rgba(0, 229, 255, 0.13), transparent 70%);
+}
+
+.card {
+  background: var(--color-ink-2);
+  border: 1px solid var(--color-line);
+}
+
+.glow-pink {
+  box-shadow: 0 0 40px -8px rgba(255, 20, 100, 0.55);
+}
+.glow-cyan {
+  box-shadow: 0 0 40px -8px rgba(0, 229, 255, 0.5);
+}
+
+/* ---- form controls ---- */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2px;
+  background: var(--color-line);
+  outline: none;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--color-pink);
+  border: 2px solid var(--color-ink);
+  box-shadow: 0 0 14px rgba(255, 20, 100, 0.8);
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--color-pink);
+  border: 2px solid var(--color-ink);
+  cursor: pointer;
+}
+
+textarea,
+input[type="text"],
+input[type="number"],
+select {
+  background: var(--color-ink-3);
+  border: 1px solid var(--color-line);
+  color: var(--color-chalk);
+  font-family: var(--font-mono);
+  outline: none;
+}
+textarea:focus,
+input:focus,
+select:focus {
+  border-color: var(--color-cyan);
+  box-shadow: 0 0 0 1px var(--color-cyan);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+  background: #23273a;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-pink);
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: riseIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes pulseRing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(0, 229, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 229, 255, 0);
+  }
+}
+.ring-pulse {
+  animation: pulseRing 1.8s infinite;
+}
+
+/* Hebrew / RTL: Heebo for body + display; no forced uppercase on Hebrew */
+html[lang="he"] body {
+  font-family: "Heebo", var(--font-sans);
+}
+
+html[lang="he"] .display {
+  font-family: "Heebo", system-ui, sans-serif;
+  text-transform: none;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+}
+
+html[lang="he"] .eyebrow {
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
