@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import { tokenize, tokenHue, loadEncoder } from "../lib/tokenize";
 import { num } from "../lib/format";
 import { Card, Section } from "./ui";
@@ -137,12 +137,8 @@ export function TokenizerLab() {
                     <span
                       key={i}
                       title={`token #${i + 1} · id ${tok.id} · ${JSON.stringify(tok.text)}`}
-                      className="mono px-[6px] py-[3px] text-[12.5px] leading-tight whitespace-pre"
-                      style={{
-                        background: `hsl(${hue} 72% 60% / 0.22)`,
-                        color: `hsl(${hue} 85% 78%)`,
-                        borderBottom: `2px solid hsl(${hue} 80% 62%)`,
-                      }}
+                      className="tok-chip mono px-[6px] py-[3px] text-[12.5px] leading-tight whitespace-pre"
+                      style={{ "--h": hue } as CSSProperties}
                     >
                       {display || "␀"}
                     </span>

@@ -39,10 +39,10 @@ export type Model = {
 };
 
 export const PROVIDER_COLOR: Record<Provider, string> = {
-  Anthropic: "#ff8a3d",
-  OpenAI: "#00e5ff",
-  Google: "#c6ff2e",
-  xAI: "#ff1464",
+  Anthropic: "var(--orange)",
+  OpenAI: "var(--cyan)",
+  Google: "var(--lime)",
+  xAI: "var(--pink)",
 };
 
 export const MODELS: Model[] = [

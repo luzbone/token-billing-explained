@@ -288,11 +288,11 @@ export function WorkloadCalculator() {
                   </div>
                   <div className="flex h-5 w-full bg-ink-3">
                     {[
-                      { v: r.input, c: "#00e5ff" },
-                      { v: r.cacheWrite, c: "#ffb020" },
-                      { v: r.cacheRead, c: "#c6ff2e" },
-                      { v: r.output, c: "#ff1464" },
-                      { v: r.storage, c: "#8b91a7" },
+                      { v: r.input, c: "var(--cyan)" },
+                      { v: r.cacheWrite, c: "var(--amber)" },
+                      { v: r.cacheRead, c: "var(--lime)" },
+                      { v: r.output, c: "var(--pink)" },
+                      { v: r.storage, c: "var(--mute)" },
                     ].map((seg, i) => (
                       <div
                         key={i}

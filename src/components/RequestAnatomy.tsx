@@ -7,10 +7,10 @@ import { useT } from "../i18n";
 type Phase = "idle" | "uploading" | "thinking" | "streaming" | "done";
 
 const PART_META = [
-  { key: "system" as const, tokens: 1200, tone: "#00e5ff" },
-  { key: "tools" as const, tokens: 2400, tone: "#7df9ff" },
-  { key: "history" as const, tokens: 3600, tone: "#c6ff2e" },
-  { key: "user" as const, tokens: 180, tone: "#ffb020" },
+  { key: "system" as const, tokens: 1200, tone: "var(--cyan)" },
+  { key: "tools" as const, tokens: 2400, tone: "var(--cyan-edge)" },
+  { key: "history" as const, tokens: 3600, tone: "var(--lime)" },
+  { key: "user" as const, tokens: 180, tone: "var(--amber)" },
 ];
 
 const INPUT_TOTAL = PART_META.reduce((s, p) => s + p.tokens, 0);
@@ -225,13 +225,13 @@ export function RequestAnatomy() {
 
             <div className="mt-8 flex flex-col gap-4">
               {[
-                { l: t.anatomy.inputTokens, v: live.input, tok: INPUT_TOTAL, rate: model.input, c: "#00e5ff" },
-                { l: t.anatomy.outputTokens, v: live.output, tok: OUTPUT_TOTAL, rate: model.output, c: "#ff1464" },
+                { l: t.anatomy.inputTokens, v: live.input, tok: INPUT_TOTAL, rate: model.input, c: "var(--cyan)", fg: "var(--cyan-fg)" },
+                { l: t.anatomy.outputTokens, v: live.output, tok: OUTPUT_TOTAL, rate: model.output, c: "var(--pink)", fg: "var(--pink-fg)" },
               ].map((r) => (
                 <div key={r.l}>
                   <div className="mb-1 flex items-baseline justify-between">
                     <span className="text-sm text-chalk">{r.l}</span>
-                    <span className="mono text-sm" style={{ color: r.c }}>
+                    <span className="mono text-sm" style={{ color: r.fg }}>
                       {money(r.v)}
                     </span>
                   </div>

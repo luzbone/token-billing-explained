@@ -118,7 +118,7 @@ export function Toggle({
         }`}
       >
         <span
-          className={`pill absolute top-1 h-4 w-4 bg-ink transition-all ${
+          className={`pill absolute top-1 h-4 w-4 bg-ink-2 transition-all ${
             checked ? "start-6" : "start-1"
           }`}
         />

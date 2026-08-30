@@ -7,12 +7,19 @@
   --color-line: var(--line);
   --color-pink: var(--pink);
   --color-pink-hot: var(--pink-hot);
+  --color-pink-fg: var(--pink-fg);
   --color-cyan: var(--cyan);
   --color-cyan-edge: var(--cyan-edge);
+  --color-cyan-fg: var(--cyan-fg);
   --color-lime: var(--lime);
+  --color-lime-fg: var(--lime-fg);
   --color-amber: var(--amber);
+  --color-amber-fg: var(--amber-fg);
+  --color-orange: var(--orange);
+  --color-orange-fg: var(--orange-fg);
   --color-chalk: var(--chalk);
   --color-mute: var(--mute);
+  --color-on-fill: var(--on-fill);
 
   --font-display: "Anton", "Heebo", system-ui, sans-serif;
   --font-sans: "Inter", "Heebo", system-ui, sans-serif;
@@ -33,29 +40,89 @@
   --cyan-edge: #7df9ff;
   --lime: #c6ff2e;
   --amber: #ffb020;
+  --orange: #ff8a3d;
   --chalk: #f2f3f7;
   --mute: #8b91a7;
+  --on-fill: #05060a;
+  /* Text accents track fills at night (neon on black). */
+  --pink-fg: var(--pink);
+  --pink-hot-fg: var(--pink-hot);
+  --cyan-fg: var(--cyan);
+  --cyan-edge-fg: var(--cyan-edge);
+  --lime-fg: var(--lime);
+  --amber-fg: var(--amber);
+  --orange-fg: var(--orange);
+  /* Tokenizer chips: luminous on ink-3 */
+  --tok-bg-s: 72%;
+  --tok-bg-l: 60%;
+  --tok-bg-a: 0.22;
+  --tok-fg-s: 85%;
+  --tok-fg-l: 78%;
+  --tok-bd-s: 80%;
+  --tok-bd-l: 62%;
 }
 
 html[data-theme="light"] {
   color-scheme: light;
-  --ink: #eef0f4;
-  --ink-2: #f7f8fb;
-  --ink-3: #e2e5ee;
-  --line: #c5c9d6;
+  --ink: #e6e8f0;
+  --ink-2: #ffffff;
+  --ink-3: #eef0f6;
+  --line: #c5cad6;
+  /* Fills stay the night neons (CTA, pills, bars). */
   --pink: #ff1464;
   --pink-hot: #ff0080;
   --cyan: #00e5ff;
   --cyan-edge: #7df9ff;
   --lime: #c6ff2e;
   --amber: #ffb020;
+  --orange: #ff8a3d;
   --chalk: #12141a;
-  --mute: #5c6478;
+  --mute: #4a5264;
+  --on-fill: #05060a;
+  /* Text/icon inks: same hues, dark enough for AA on paper/cards. */
+  --pink-fg: #c40b4e;
+  --pink-hot-fg: #c4004a;
+  --cyan-fg: #00687c;
+  --cyan-edge-fg: #0a6274;
+  --lime-fg: #3d6c00;
+  --amber-fg: #9a5600;
+  --orange-fg: #b03e00;
+  /* Tokenizer chips: dyed paper, dark type */
+  --tok-bg-s: 78%;
+  --tok-bg-l: 42%;
+  --tok-bg-a: 0.22;
+  --tok-fg-s: 82%;
+  --tok-fg-l: 28%;
+  --tok-bd-s: 70%;
+  --tok-bd-l: 38%;
 }
 
-/* Same as night: dark type on neon fills (CTA, EN, selected pills). */
+/* Dark type on neon fills (CTA, EN, DAY, selected pills). */
 html[data-theme="light"] .text-ink {
-  color: #05060a;
+  color: var(--on-fill);
+}
+
+/* Tailwind text-* maps to fill tokens; remap to fg inks on paper. */
+html[data-theme="light"] .text-pink {
+  color: var(--pink-fg);
+}
+html[data-theme="light"] .text-pink-hot {
+  color: var(--pink-hot-fg);
+}
+html[data-theme="light"] .text-cyan {
+  color: var(--cyan-fg);
+}
+html[data-theme="light"] .text-cyan-edge {
+  color: var(--cyan-edge-fg);
+}
+html[data-theme="light"] .text-lime {
+  color: var(--lime-fg);
+}
+html[data-theme="light"] .text-amber {
+  color: var(--amber-fg);
+}
+html[data-theme="light"] .text-orange {
+  color: var(--orange-fg);
 }
 
 html {
@@ -112,6 +179,12 @@ html[dir="rtl"] .mono {
     radial-gradient(50% 45% at 92% 12%, rgb(from var(--cyan) r g b / 0.13), transparent 70%);
 }
 
+.tok-chip {
+  background: hsl(var(--h) var(--tok-bg-s) var(--tok-bg-l) / var(--tok-bg-a));
+  color: hsl(var(--h) var(--tok-fg-s) var(--tok-fg-l));
+  border-bottom: 2px solid hsl(var(--h) var(--tok-bd-s) var(--tok-bd-l));
+}
+
 .card {
   background: var(--ink-2);
   border: 1px solid var(--line);
@@ -141,7 +214,7 @@ input[type="range"]::-webkit-slider-thumb {
   height: 18px;
   border-radius: 999px;
   background: var(--pink);
-  border: 2px solid var(--ink);
+  border: 2px solid var(--ink-2);
   box-shadow: 0 0 14px rgb(from var(--pink) r g b / 0.8);
   cursor: pointer;
 }
@@ -150,7 +223,7 @@ input[type="range"]::-moz-range-thumb {
   height: 18px;
   border-radius: 999px;
   background: var(--pink);
-  border: 2px solid var(--ink);
+  border: 2px solid var(--ink-2);
   cursor: pointer;
 }
 
@@ -234,15 +307,20 @@ html[lang="he"] .eyebrow {
 
 html[data-theme="light"] .glow-field {
   background:
-    radial-gradient(60% 50% at 12% 0%, rgb(from var(--pink) r g b / 0.14), transparent 70%),
-    radial-gradient(50% 45% at 92% 12%, rgb(from var(--cyan) r g b / 0.12), transparent 70%);
+    radial-gradient(60% 50% at 12% 0%, rgb(from var(--pink) r g b / 0.18), transparent 68%),
+    radial-gradient(50% 45% at 92% 12%, rgb(from var(--cyan) r g b / 0.16), transparent 68%);
 }
 
 html[data-theme="light"] .glow-pink {
-  box-shadow: 0 0 32px -10px rgb(from var(--pink) r g b / 0.32);
+  box-shadow: 0 0 28px -10px rgb(from var(--pink) r g b / 0.38);
 }
 html[data-theme="light"] .glow-cyan {
-  box-shadow: 0 0 32px -10px rgb(from var(--cyan) r g b / 0.28);
+  box-shadow: 0 0 28px -10px rgb(from var(--cyan) r g b / 0.32);
+}
+
+::selection {
+  background: var(--pink);
+  color: var(--on-fill);
 }
 
 @media (prefers-reduced-motion: reduce) {

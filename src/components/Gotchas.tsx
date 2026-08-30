@@ -3,14 +3,14 @@ import { Card, Section } from "./ui";
 import { useT } from "../i18n";
 
 const COLORS = [
-  "#ff1464",
-  "#ffb020",
-  "#00e5ff",
-  "#c6ff2e",
-  "#ff8a3d",
-  "#7df9ff",
-  "#8b91a7",
-  "#ffb020",
+  "var(--pink-fg)",
+  "var(--amber-fg)",
+  "var(--cyan-fg)",
+  "var(--lime-fg)",
+  "var(--orange-fg)",
+  "var(--cyan-edge-fg)",
+  "var(--mute)",
+  "var(--amber-fg)",
 ];
 
 export function Gotchas() {

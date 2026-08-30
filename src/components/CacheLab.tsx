@@ -44,7 +44,7 @@ export function CacheLab() {
   const cards = [
     {
       t: c.write.t,
-      color: "#ffb020",
+      color: "var(--amber-fg)",
       price:
         writeRate === null
           ? model.cacheStoragePerHour
@@ -60,7 +60,7 @@ export function CacheLab() {
     },
     {
       t: c.read.t,
-      color: "#00e5ff",
+      color: "var(--cyan-fg)",
       price: readRate === null ? c.read.notPublished : interpolate(c.read.per1M, { rate: readRate }),
       body:
         readRate === null
@@ -72,7 +72,7 @@ export function CacheLab() {
     },
     {
       t: c.ttl.t,
-      color: "#c6ff2e",
+      color: "var(--lime-fg)",
       price:
         model.provider === "Anthropic"
           ? c.ttl.anthropic
@@ -88,7 +88,7 @@ export function CacheLab() {
     },
     {
       t: c.breakeven.t,
-      color: "#ff1464",
+      color: "var(--pink-fg)",
       price:
         be === null
           ? c.breakeven.na

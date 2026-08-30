@@ -78,7 +78,7 @@ export function PricingTable() {
               className="pill flex items-center gap-2 border px-4 py-2 text-xs font-semibold transition-all"
               style={{
                 borderColor: on ? PROVIDER_COLOR[p] : "var(--line)",
-                color: on ? "#05060a" : "var(--mute)",
+                color: on ? "var(--on-fill)" : "var(--mute)",
                 background: on ? PROVIDER_COLOR[p] : "transparent",
               }}
             >
@@ -198,9 +198,9 @@ export function PricingTable() {
 
       <div className="mt-6 grid gap-5 md:grid-cols-3">
         {[
-          { ...t.pricing.notes.ratio, c: "#ff1464" },
-          { ...t.pricing.notes.longContext, c: "#ffb020" },
-          { ...t.pricing.notes.batch, c: "#c6ff2e" },
+          { ...t.pricing.notes.ratio, c: "var(--pink)" },
+          { ...t.pricing.notes.longContext, c: "var(--amber)" },
+          { ...t.pricing.notes.batch, c: "var(--lime)" },
         ].map((x) => (
           <Card key={x.t} className="p-5">
             <span className="mb-3 block h-1 w-10" style={{ background: x.c }} aria-hidden />
