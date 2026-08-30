@@ -77,8 +77,8 @@ export function PricingTable() {
               onClick={() => toggle(p)}
               className="pill flex items-center gap-2 border px-4 py-2 text-xs font-semibold transition-all"
               style={{
-                borderColor: on ? PROVIDER_COLOR[p] : "#1e2130",
-                color: on ? "#05060a" : "#8b91a7",
+                borderColor: on ? PROVIDER_COLOR[p] : "var(--line)",
+                color: on ? "#05060a" : "var(--mute)",
                 background: on ? PROVIDER_COLOR[p] : "transparent",
               }}
             >

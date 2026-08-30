@@ -21,6 +21,8 @@ export const he: Dict = {
       quiz: "08 חידון",
     },
     langAria: "שפה",
+    themeToLight: "מעבר לערכת יום",
+    themeToDark: "מעבר לערכת לילה",
   },
   hero: {
     eyebrow: "אינטראקטיבי · מחירים מעודכנים ל־2026-08-10",

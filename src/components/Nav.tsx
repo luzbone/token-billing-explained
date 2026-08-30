@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
 import { LOCALES, useI18n, useT } from "../i18n";
+import {
+  applyTheme,
+  nextTheme,
+  readStoredTheme,
+  type Theme,
+} from "../lib/theme";
 
 const LINK_IDS = [
   "tokenizer",
@@ -18,6 +24,9 @@ export function Nav() {
   const [active, setActive] = useState("tokenizer");
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState<Theme>(() =>
+    typeof window === "undefined" ? "dark" : readStoredTheme(),
+  );
 
   const links = LINK_IDS.map((id) => ({
     id,
@@ -96,6 +105,20 @@ export function Nav() {
           </div>
 
           <button
+            type="button"
+            onClick={() => {
+              const next = nextTheme(theme);
+              applyTheme(next);
+              setTheme(next);
+            }}
+            className="flex items-center justify-center border border-line px-3 py-2 text-mute transition-colors hover:text-chalk"
+            aria-label={theme === "dark" ? t.nav.themeToLight : t.nav.themeToDark}
+            aria-pressed={theme === "light"}
+          >
+            {theme === "dark" ? <SunMark /> : <MoonMark />}
+          </button>
+
+          <button
             onClick={() => setOpen(!open)}
             className="mono pill border border-line px-4 py-2 text-[11px] text-mute xl:hidden"
             aria-expanded={open}
@@ -122,5 +145,26 @@ export function Nav() {
         </div>
       )}
     </nav>
+  );
+}
+
+function SunMark() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+      <rect x="5" y="5" width="4" height="4" fill="currentColor" />
+      <rect x="6.5" y="0" width="1" height="3" fill="currentColor" />
+      <rect x="6.5" y="11" width="1" height="3" fill="currentColor" />
+      <rect x="0" y="6.5" width="3" height="1" fill="currentColor" />
+      <rect x="11" y="6.5" width="3" height="1" fill="currentColor" />
+    </svg>
+  );
+}
+
+function MoonMark() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+      <rect x="3" y="2" width="8" height="10" fill="currentColor" />
+      <rect x="6" y="4" width="6" height="6" fill="var(--ink)" />
+    </svg>
   );
 }
