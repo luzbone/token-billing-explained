@@ -39,18 +39,23 @@
 
 html[data-theme="light"] {
   color-scheme: light;
-  --ink: #efe8dc;
-  --ink-2: #f7f2e9;
-  --ink-3: #e4dbc9;
-  --line: #cbbfaa;
-  --pink: #c70d4c;
-  --pink-hot: #d4006c;
-  --cyan: #0a7380;
-  --cyan-edge: #0e8a98;
-  --lime: #3f6e00;
-  --amber: #9a5a00;
-  --chalk: #1a1612;
-  --mute: #6e675c;
+  --ink: #eef0f4;
+  --ink-2: #f7f8fb;
+  --ink-3: #e2e5ee;
+  --line: #c5c9d6;
+  --pink: #ff1464;
+  --pink-hot: #ff0080;
+  --cyan: #00e5ff;
+  --cyan-edge: #7df9ff;
+  --lime: #c6ff2e;
+  --amber: #ffb020;
+  --chalk: #12141a;
+  --mute: #5c6478;
+}
+
+/* Same as night: dark type on neon fills (CTA, EN, selected pills). */
+html[data-theme="light"] .text-ink {
+  color: #05060a;
 }
 
 html {
@@ -229,8 +234,8 @@ html[lang="he"] .eyebrow {
 
 html[data-theme="light"] .glow-field {
   background:
-    radial-gradient(60% 50% at 12% 0%, rgb(from var(--pink) r g b / 0.1), transparent 70%),
-    radial-gradient(50% 45% at 92% 12%, rgb(from var(--cyan) r g b / 0.08), transparent 70%);
+    radial-gradient(60% 50% at 12% 0%, rgb(from var(--pink) r g b / 0.14), transparent 70%),
+    radial-gradient(50% 45% at 92% 12%, rgb(from var(--cyan) r g b / 0.12), transparent 70%);
 }
 
 html[data-theme="light"] .glow-pink {
