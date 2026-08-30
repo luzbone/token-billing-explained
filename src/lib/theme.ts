@@ -25,7 +25,3 @@ export function applyTheme(theme: Theme): void {
     /* ignore */
   }
 }
-
-export function nextTheme(theme: Theme): Theme {
-  return theme === "dark" ? "light" : "dark";
-}

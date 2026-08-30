@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { LOCALES, useI18n, useT } from "../i18n";
 import {
   applyTheme,
-  nextTheme,
   readStoredTheme,
   type Theme,
 } from "../lib/theme";
@@ -104,19 +103,38 @@ export function Nav() {
             ))}
           </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              const next = nextTheme(theme);
-              applyTheme(next);
-              setTheme(next);
-            }}
-            className="flex items-center justify-center border border-line px-3 py-2 text-mute transition-colors hover:text-chalk"
-            aria-label={theme === "dark" ? t.nav.themeToLight : t.nav.themeToDark}
-            aria-pressed={theme === "light"}
+          <div
+            className="flex items-center gap-px border border-line"
+            role="group"
+            aria-label={t.nav.themeAria}
           >
-            {theme === "dark" ? <SunMark /> : <MoonMark />}
-          </button>
+            <button
+              type="button"
+              onClick={() => {
+                applyTheme("dark");
+                setTheme("dark");
+              }}
+              className={`mono px-3 py-2 text-[11px] tracking-wide transition-colors ${
+                theme === "dark" ? "bg-cyan text-ink" : "text-mute hover:text-chalk"
+              }`}
+              aria-pressed={theme === "dark"}
+            >
+              {t.nav.themeDark}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                applyTheme("light");
+                setTheme("light");
+              }}
+              className={`mono px-3 py-2 text-[11px] tracking-wide transition-colors ${
+                theme === "light" ? "bg-cyan text-ink" : "text-mute hover:text-chalk"
+              }`}
+              aria-pressed={theme === "light"}
+            >
+              {t.nav.themeLight}
+            </button>
+          </div>
 
           <button
             onClick={() => setOpen(!open)}
@@ -145,26 +163,5 @@ export function Nav() {
         </div>
       )}
     </nav>
-  );
-}
-
-function SunMark() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-      <rect x="5" y="5" width="4" height="4" fill="currentColor" />
-      <rect x="6.5" y="0" width="1" height="3" fill="currentColor" />
-      <rect x="6.5" y="11" width="1" height="3" fill="currentColor" />
-      <rect x="0" y="6.5" width="3" height="1" fill="currentColor" />
-      <rect x="11" y="6.5" width="3" height="1" fill="currentColor" />
-    </svg>
-  );
-}
-
-function MoonMark() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-      <rect x="3" y="2" width="8" height="10" fill="currentColor" />
-      <rect x="6" y="4" width="6" height="6" fill="var(--ink)" />
-    </svg>
   );
 }
