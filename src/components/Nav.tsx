@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 import { LOCALES, useI18n, useT } from "../i18n";
+import {
+  applyTheme,
+  readStoredTheme,
+  type Theme,
+} from "../lib/theme";
 
 const LINK_IDS = [
   "tokenizer",
@@ -18,6 +23,9 @@ export function Nav() {
   const [active, setActive] = useState("tokenizer");
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState<Theme>(() =>
+    typeof window === "undefined" ? "dark" : readStoredTheme(),
+  );
 
   const links = LINK_IDS.map((id) => ({
     id,
@@ -93,6 +101,39 @@ export function Nav() {
                 {l.id === "en" ? "EN" : "עב"}
               </button>
             ))}
+          </div>
+
+          <div
+            className="flex items-center gap-px border border-line"
+            role="group"
+            aria-label={t.nav.themeAria}
+          >
+            <button
+              type="button"
+              onClick={() => {
+                applyTheme("dark");
+                setTheme("dark");
+              }}
+              className={`mono px-3 py-2 text-[11px] tracking-wide transition-colors ${
+                theme === "dark" ? "bg-cyan text-ink" : "text-mute hover:text-chalk"
+              }`}
+              aria-pressed={theme === "dark"}
+            >
+              {t.nav.themeDark}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                applyTheme("light");
+                setTheme("light");
+              }}
+              className={`mono px-3 py-2 text-[11px] tracking-wide transition-colors ${
+                theme === "light" ? "bg-cyan text-ink" : "text-mute hover:text-chalk"
+              }`}
+              aria-pressed={theme === "light"}
+            >
+              {t.nav.themeLight}
+            </button>
           </div>
 
           <button

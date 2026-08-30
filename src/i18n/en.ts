@@ -19,6 +19,9 @@ export const en = {
       quiz: "08 Quiz",
     },
     langAria: "Language",
+    themeAria: "Color theme",
+    themeDark: "NITE",
+    themeLight: "DAY",
   },
   hero: {
     eyebrow: "Interactive · pricing observed 2026-08-10",
