@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
-import { MODELS, PROVIDERS, PROVIDER_COLOR, type Provider, type Model } from "../lib/pricing";
+import { MODELS, PRICING_AS_OF, PROVIDERS, PROVIDER_COLOR, type Provider, type Model } from "../lib/pricing";
 import { compact, num } from "../lib/format";
 import { Card, Section } from "./ui";
-import { useT } from "../i18n";
+import { interpolate, useT } from "../i18n";
 
 type SortKey = "provider" | "input" | "output" | "cacheRead" | "ratio";
 
@@ -66,7 +66,7 @@ export function PricingTable() {
           {t.pricing.title2b}
         </>
       }
-      lede={t.pricing.lede}
+      lede={interpolate(t.pricing.lede, { date: PRICING_AS_OF })}
     >
       <div className="mb-6 flex flex-wrap gap-2">
         {PROVIDERS.map((p) => {
@@ -125,17 +125,7 @@ export function PricingTable() {
                         aria-hidden
                       />
                       <span>
-                        <span className="block font-semibold text-chalk">
-                          {m.label}
-                          {m.unverified && (
-                            <span
-                              className="mono ms-2 text-[10px] text-amber"
-                              title="Model ID inferred — Google's pricing page renders IDs via JavaScript"
-                            >
-                              ID?
-                            </span>
-                          )}
-                        </span>
+                        <span className="block font-semibold text-chalk">{m.label}</span>
                         <span className="mono text-[11px] text-mute">{m.provider}</span>
                       </span>
                     </div>

@@ -1,4 +1,5 @@
-import { useT } from "../i18n";
+import { PRICING_AS_OF } from "../lib/pricing";
+import { interpolate, useT } from "../i18n";
 
 export function Footer() {
   const t = useT();
@@ -15,13 +16,13 @@ export function Footer() {
         </div>
 
         <div>
-          <div className="eyebrow mb-5">{t.footer.sources}</div>
+          <div className="eyebrow mb-5">{interpolate(t.footer.sources, { date: PRICING_AS_OF })}</div>
           <ul className="flex flex-col gap-3 text-sm">
             {[
               { n: "Anthropic", u: "https://www.anthropic.com/pricing" },
               { n: "OpenAI", u: "https://platform.openai.com/docs/pricing" },
               { n: "Google Gemini", u: "https://ai.google.dev/gemini-api/docs/pricing" },
-              { n: "xAI Grok", u: "https://docs.x.ai/developers/models" },
+              { n: "xAI Grok", u: "https://docs.x.ai/developers/pricing" },
             ].map((l) => (
               <li key={l.n}>
                 <a

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { MODELS } from "../lib/pricing";
-import { useT } from "../i18n";
+import { MODELS, PRICING_AS_OF } from "../lib/pricing";
+import { interpolate, useT } from "../i18n";
 
 const cheapest = MODELS.reduce((a, b) => (a.input < b.input ? a : b));
 const dearest = MODELS.reduce((a, b) => (a.output > b.output ? a : b));
@@ -37,7 +37,7 @@ export function Hero() {
       <div className="mx-auto max-w-[1240px]">
         <div className="eyebrow mb-8 flex flex-wrap items-center gap-3">
           <span className="pill inline-block h-2 w-2 bg-lime ring-pulse" aria-hidden />
-          {t.hero.eyebrow}
+          {interpolate(t.hero.eyebrow, { date: PRICING_AS_OF })}
         </div>
 
         <h1 className="display max-w-5xl text-[13vw] leading-[0.92] text-chalk sm:text-[9vw] lg:text-[112px]">

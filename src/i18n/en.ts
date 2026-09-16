@@ -24,7 +24,7 @@ export const en = {
     themeLight: "DAY",
   },
   hero: {
-    eyebrow: "Interactive · pricing observed 2026-08-10",
+    eyebrow: "Interactive · pricing observed {{date}}",
     title1: "Nobody reads",
     title2a: "the ",
     title2Token: "token",
@@ -274,7 +274,7 @@ export const en = {
     title2a: "side by ",
     title2Side: "side",
     title2b: ".",
-    lede: "USD per 1,000,000 tokens, standard tier, observed 2026-08-10 from each provider's official pricing page. Sort by any column — and notice that the \"cheapest\" model changes completely depending on whether your workload is input-heavy or output-heavy.",
+    lede: "USD per 1,000,000 tokens, standard tier, observed {{date}} from each provider's official pricing page. Sort by any column — and notice that the \"cheapest\" model changes completely depending on whether your workload is input-heavy or output-heavy.",
     scrollHint: "← scroll the table sideways →",
     cols: {
       model: "Model",
@@ -298,8 +298,8 @@ export const en = {
         b: "Cross the threshold and the higher rate applies to the WHOLE request, not just the overflow. One extra token can double the price of the entire call.",
       },
       batch: {
-        t: "Batch is the least-used 50%",
-        b: "If your work isn't interactive — evals, backfills, summarising a corpus overnight — the batch API halves everything for a latency window you probably don't care about.",
+        t: "Batch is the least-used discount",
+        b: "If your work isn't interactive — evals, backfills, summarising a corpus overnight — most providers cut input and output by 50%. xAI is the exception: Grok 4.3 is 20% off, and Grok 4.5 / 4.6 have no batch discount at all.",
       },
     },
   },
@@ -467,7 +467,7 @@ export const en = {
       {
         q: "On Anthropic, writing a prefix to the 5-minute cache costs…",
         a: ["Nothing extra", "0.1× the input rate", "1.25× the input rate", "2× the output rate"],
-        why: "Cache writes cost 1.25× input for a 5-minute TTL and 2× for a 1-hour TTL. Reads then cost just 0.1× input.",
+        why: "Cache writes cost 1.25× input for a 5-minute TTL and 2× for a 1-hour TTL. Reads then cost 0.1× input on most Claude models — 0.025× on Fable 5.1.",
       },
       {
         q: "On Anthropic you write a 50k-token prefix to the 5-minute cache, then the cache expires with zero hits. Versus not caching, you…",
@@ -477,7 +477,7 @@ export const en = {
           "Paid 25% more on those tokens",
           "Paid nothing — writes are free",
         ],
-        why: "Anthropic's 5-minute cache write costs 1.25× input. With zero hits you collected no discounted reads, so you simply paid a 25% surcharge for nothing. On providers with no write premium (OpenAI GPT-5.5, xAI) the same scenario would merely break even.",
+        why: "Anthropic's 5-minute cache write costs 1.25× input. With zero hits you collected no discounted reads, so you simply paid a 25% surcharge for nothing. On providers with no write premium (xAI) the same scenario would merely break even. Current OpenAI flagships now charge 1.25× on cache writes too.",
       },
       {
         q: "A reasoning model 'thinks' for 3,000 tokens before a 200-token answer. You are billed for…",
@@ -515,9 +515,9 @@ export const en = {
     brand: "Token Bill",
     blurb:
       "An interactive explainer for how LLM APIs charge for input, output and cached tokens. Every number here is a teaching aid, not a quote — providers change prices frequently and regional, enterprise and committed-use rates differ. Always verify against the official pricing page before you budget.",
-    sources: "Official pricing sources · observed 2026-08-10",
+    sources: "Official pricing sources · observed {{date}}",
     tokenizerNote:
-      "Tokenizer: o200k_base (OpenAI). Other providers use different vocabularies, so their counts will differ. Gemini 3.x model IDs marked \"ID?\" were inferred — Google's pricing page renders them client-side.",
+      "Tokenizer: o200k_base (OpenAI). Other providers use different vocabularies, so their counts will differ.",
   },
 } as const;
 

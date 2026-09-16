@@ -1,14 +1,16 @@
 /**
  * API pricing, USD per 1,000,000 tokens, standard (non-batch) tier.
  *
- * Observed 2026-08-10 from official sources:
+ * Observed from official sources:
  *   Anthropic — https://platform.claude.com/docs/en/about-claude/pricing
  *   OpenAI    — https://developers.openai.com/api/docs/pricing
  *   Google    — https://ai.google.dev/gemini-api/docs/pricing
- *   xAI       — https://docs.x.ai/developers/models
+ *   xAI       — https://docs.x.ai/developers/pricing
  *
  * Prices change often. Treat this as a teaching snapshot, not a quote.
  */
+
+export const PRICING_AS_OF = "2026-09-16";
 
 export type Provider = "Anthropic" | "OpenAI" | "Google" | "xAI";
 
@@ -33,9 +35,14 @@ export type Model = {
   /** Multiplier applied by the batch/async API to input and output. null = no batch API. */
   batchDiscount: number | null;
   /** Optional long-context tier that kicks in above a token threshold. */
-  longContext?: { threshold: number; input: number; output: number; cacheRead: number | null };
+  longContext?: {
+    threshold: number;
+    input: number;
+    output: number;
+    cacheRead: number | null;
+    cacheWrite?: number | null;
+  };
   note?: string;
-  unverified?: boolean;
 };
 
 export const PROVIDER_COLOR: Record<Provider, string> = {
@@ -48,19 +55,19 @@ export const PROVIDER_COLOR: Record<Provider, string> = {
 export const MODELS: Model[] = [
   // ── Anthropic ───────────────────────────────────────────────
   {
-    id: "claude-fable-5",
+    id: "claude-fable-5-1",
     provider: "Anthropic",
-    label: "Claude Fable 5",
+    label: "Claude Fable 5.1",
     tier: "frontier",
     contextWindow: 1_000_000,
     input: 10,
     output: 50,
     cacheWrite5m: 12.5,
     cacheWrite1h: 20,
-    cacheRead: 1,
+    cacheRead: 0.25,
     cacheMinTokens: 1024,
     batchDiscount: 0.5,
-    note: "Cache writes cost 1.25× input (5-min TTL) or 2× (1-hour TTL). Cache reads cost 0.1× input.",
+    note: "Cache writes cost 1.25× input (5-min TTL) or 2× (1-hour TTL). Cache reads on Fable 5.1 cost 0.025× input ($0.25) — other Claude models still use 0.1×.",
   },
   {
     id: "claude-opus-5",
@@ -90,7 +97,7 @@ export const MODELS: Model[] = [
     cacheRead: 0.2,
     cacheMinTokens: 1024,
     batchDiscount: 0.5,
-    note: "Introductory pricing through 2026-08-31. From 2026-09-01: $3 in / $15 out, cache read $0.30.",
+    note: "The $2 / $10 launch price is now the standard rate. The increase to $3 / $15 scheduled for 2026-09-01 did not occur.",
   },
   {
     id: "claude-haiku-4-5",
@@ -109,27 +116,43 @@ export const MODELS: Model[] = [
 
   // ── OpenAI ──────────────────────────────────────────────────
   {
+    id: "gpt-6-astra",
+    provider: "OpenAI",
+    label: "GPT-6 Astra",
+    tier: "frontier",
+    contextWindow: 1_050_000,
+    input: 10,
+    output: 50,
+    cacheWrite5m: 12.5,
+    cacheWrite1h: null,
+    cacheRead: 1,
+    cacheMinTokens: 1024,
+    batchDiscount: 0.5,
+    longContext: { threshold: 272_000, input: 20, output: 75, cacheRead: 2, cacheWrite: 25 },
+    note: "Current OpenAI flagship. Cache writes cost 1.25× input. Prompts above 272k re-price the whole request.",
+  },
+  {
     id: "gpt-5.6-sol",
     provider: "OpenAI",
     label: "GPT-5.6 Sol",
     tier: "frontier",
-    contextWindow: null,
-    input: 5,
-    output: 30,
-    cacheWrite5m: 6.25,
+    contextWindow: 1_050_000,
+    input: 4,
+    output: 20,
+    cacheWrite5m: 5,
     cacheWrite1h: null,
-    cacheRead: 0.5,
+    cacheRead: 0.4,
     cacheMinTokens: 1024,
     batchDiscount: 0.5,
-    longContext: { threshold: 272_000, input: 10, output: 45, cacheRead: 1 },
-    note: "OpenAI's first model with an explicit cache-write surcharge (1.25× input).",
+    longContext: { threshold: 272_000, input: 8, output: 30, cacheRead: 0.8, cacheWrite: 10 },
+    note: "Promotional pricing through at least 2026-11-21. Cache writes cost 1.25× input.",
   },
   {
     id: "gpt-5.6-terra",
     provider: "OpenAI",
     label: "GPT-5.6 Terra",
     tier: "mid",
-    contextWindow: null,
+    contextWindow: 1_050_000,
     input: 2,
     output: 12,
     cacheWrite5m: 2.5,
@@ -137,14 +160,14 @@ export const MODELS: Model[] = [
     cacheRead: 0.2,
     cacheMinTokens: 1024,
     batchDiscount: 0.5,
-    longContext: { threshold: 272_000, input: 4, output: 18, cacheRead: 0.4 },
+    longContext: { threshold: 272_000, input: 4, output: 18, cacheRead: 0.4, cacheWrite: 5 },
   },
   {
     id: "gpt-5.6-luna",
     provider: "OpenAI",
     label: "GPT-5.6 Luna",
     tier: "cheap",
-    contextWindow: null,
+    contextWindow: 1_050_000,
     input: 0.2,
     output: 1.2,
     cacheWrite5m: 0.25,
@@ -152,61 +175,16 @@ export const MODELS: Model[] = [
     cacheRead: 0.02,
     cacheMinTokens: 1024,
     batchDiscount: 0.5,
-    longContext: { threshold: 272_000, input: 0.4, output: 1.8, cacheRead: 0.04 },
-  },
-  {
-    id: "gpt-5.5",
-    provider: "OpenAI",
-    label: "GPT-5.5",
-    tier: "frontier",
-    contextWindow: 272_000,
-    input: 5,
-    output: 30,
-    cacheWrite5m: null,
-    cacheWrite1h: null,
-    cacheRead: 0.5,
-    cacheMinTokens: 1024,
-    batchDiscount: 0.5,
-    longContext: { threshold: 272_000, input: 10, output: 45, cacheRead: 1 },
-    note: "No cache-write surcharge — caching here is automatic and free to populate.",
-  },
-  {
-    id: "gpt-5.4",
-    provider: "OpenAI",
-    label: "GPT-5.4",
-    tier: "mid",
-    contextWindow: 272_000,
-    input: 2.5,
-    output: 15,
-    cacheWrite5m: null,
-    cacheWrite1h: null,
-    cacheRead: 0.25,
-    cacheMinTokens: 1024,
-    batchDiscount: 0.5,
-    longContext: { threshold: 272_000, input: 5, output: 22.5, cacheRead: 0.5 },
-  },
-  {
-    id: "gpt-5.4-mini",
-    provider: "OpenAI",
-    label: "GPT-5.4 mini",
-    tier: "cheap",
-    contextWindow: null,
-    input: 0.75,
-    output: 4.5,
-    cacheWrite5m: null,
-    cacheWrite1h: null,
-    cacheRead: 0.075,
-    cacheMinTokens: 1024,
-    batchDiscount: 0.5,
+    longContext: { threshold: 272_000, input: 0.4, output: 1.8, cacheRead: 0.04, cacheWrite: 0.5 },
   },
 
   // ── Google ──────────────────────────────────────────────────
   {
-    id: "gemini-3-pro",
+    id: "gemini-3.1-pro-preview",
     provider: "Google",
-    label: "Gemini 3 Pro",
+    label: "Gemini 3.1 Pro",
     tier: "frontier",
-    contextWindow: null,
+    contextWindow: 1_048_576,
     input: 2,
     output: 12,
     cacheWrite5m: null,
@@ -216,40 +194,38 @@ export const MODELS: Model[] = [
     cacheMinTokens: 2048,
     batchDiscount: 0.5,
     longContext: { threshold: 200_000, input: 4, output: 18, cacheRead: 0.4 },
-    unverified: true,
-    note: "Google bills cache storage by the hour ($4.50 / 1M tokens / hr) instead of a write surcharge.",
+    note: "Google bills cache storage by the hour ($4.50 / 1M tokens / hr) instead of a write surcharge. API id: gemini-3.1-pro-preview.",
   },
   {
-    id: "gemini-3.1-flash",
+    id: "gemini-3.8-flash",
     provider: "Google",
-    label: "Gemini 3.1 Flash",
+    label: "Gemini 3.8 Flash",
     tier: "mid",
-    contextWindow: null,
-    input: 1.5,
-    output: 7.5,
+    contextWindow: 1_000_000,
+    input: 0.75,
+    output: 3.75,
     cacheWrite5m: null,
     cacheWrite1h: null,
-    cacheRead: 0.15,
-    cacheStoragePerHour: 1,
+    cacheRead: 0.075,
+    cacheStoragePerHour: 0.5,
     cacheMinTokens: 2048,
     batchDiscount: 0.5,
-    unverified: true,
+    note: "Introductory pricing through 2026-12-31, then $1.50 in / $7.50 out, cache read $0.15, storage $1.00/hr.",
   },
   {
-    id: "gemini-2.5-pro",
+    id: "gemini-3.1-flash-lite",
     provider: "Google",
-    label: "Gemini 2.5 Pro",
-    tier: "frontier",
+    label: "Gemini 3.1 Flash-Lite",
+    tier: "cheap",
     contextWindow: 1_000_000,
-    input: 1.25,
-    output: 10,
+    input: 0.25,
+    output: 1.5,
     cacheWrite5m: null,
     cacheWrite1h: null,
-    cacheRead: 0.125,
-    cacheStoragePerHour: 4.5,
-    cacheMinTokens: 4096,
+    cacheRead: 0.025,
+    cacheStoragePerHour: 1,
+    cacheMinTokens: 1024,
     batchDiscount: 0.5,
-    longContext: { threshold: 200_000, input: 2.5, output: 15, cacheRead: 0.25 },
   },
   {
     id: "gemini-2.5-flash",
@@ -271,7 +247,7 @@ export const MODELS: Model[] = [
     provider: "Google",
     label: "Gemini 2.5 Flash Lite",
     tier: "cheap",
-    contextWindow: null,
+    contextWindow: 1_000_000,
     input: 0.1,
     output: 0.4,
     cacheWrite5m: null,
@@ -283,6 +259,22 @@ export const MODELS: Model[] = [
   },
 
   // ── xAI ─────────────────────────────────────────────────────
+  {
+    id: "grok-4.6",
+    provider: "xAI",
+    label: "Grok 4.6",
+    tier: "frontier",
+    contextWindow: 500_000,
+    input: 2,
+    output: 6,
+    cacheWrite5m: null,
+    cacheWrite1h: null,
+    cacheRead: 0.5,
+    cacheMinTokens: 1024,
+    batchDiscount: null,
+    longContext: { threshold: 200_000, input: 4, output: 12, cacheRead: 1 },
+    note: "Same $2 / $6 as Grok 4.5, but cache reads are $0.50 instead of $0.30. Cross 200k and the entire request re-prices at 2×.",
+  },
   {
     id: "grok-4.5",
     provider: "xAI",
@@ -311,9 +303,9 @@ export const MODELS: Model[] = [
     cacheWrite1h: null,
     cacheRead: 0.2,
     cacheMinTokens: 1024,
-    batchDiscount: null,
+    batchDiscount: 0.8,
     longContext: { threshold: 200_000, input: 2.5, output: 5, cacheRead: 0.4 },
-    note: "Notably flat input:output ratio of 1:2 — unusually cheap output for a frontier-class model.",
+    note: "Notably flat input:output ratio of 1:2. Batch API is 20% off — not the 50% most other providers advertise.",
   },
   {
     id: "grok-build-0.1",
@@ -340,8 +332,8 @@ export const PROVIDERS: Provider[] = ["Anthropic", "OpenAI", "Google", "xAI"];
 export const DEFAULT_COMPARE = [
   "claude-sonnet-5",
   "gpt-5.6-terra",
-  "gemini-3-pro",
-  "grok-4.5",
+  "gemini-3.8-flash",
+  "grok-4.6",
 ];
 
 export type Usage = {
@@ -404,8 +396,10 @@ export function priceUsage(m: Model, u: Usage, opts?: PriceOpts): CostBreakdown 
   const prefix = opts?.prefixTokens;
   const cacheable = !hasCache || prefix === undefined || prefix >= m.cacheMinTokens;
 
-  const writeRate =
+  const baseWrite =
     (ttl === "1h" ? m.cacheWrite1h : m.cacheWrite5m) ?? m.cacheWrite5m ?? inRate;
+  const writeRate =
+    long && m.longContext?.cacheWrite != null ? m.longContext.cacheWrite : baseWrite;
   const readRate = baseReadRate ?? inRate;
 
   const effWrite = cacheable ? writeRate : inRate;
