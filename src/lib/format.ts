@@ -36,6 +36,16 @@ export const compact = (n: number, locale = defaultNumberLocale) =>
 
 export const pct = (n: number, frac = 0) => `${(n * 100).toFixed(frac)}%`;
 
+/**
+ * Percent off a price multiplier. 0.8 is 20% off, but `1 - 0.8` is
+ * 0.19999999999999996 in binary floats, so a raw `* 100` prints
+ * 19.999999999999996. Round to the nearest tenth, then drop a trailing .0.
+ */
+export const percentOff = (multiplier: number) => {
+  const tenths = Math.round((1 - multiplier) * 1000) / 10;
+  return Number.isInteger(tenths) ? String(tenths) : tenths.toFixed(1);
+};
+
 export const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n));
 
 /** Prices are quoted per 1M tokens. Converts a token count + unit price to dollars. */

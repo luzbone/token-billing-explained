@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { MODELS, PRICING_AS_OF, PROVIDERS, PROVIDER_COLOR, type Provider, type Model } from "../lib/pricing";
-import { compact, num } from "../lib/format";
+import { compact, num, percentOff } from "../lib/format";
 import { Card, Section } from "./ui";
 import { interpolate, useT } from "../i18n";
 
@@ -185,7 +185,7 @@ export function PricingTable() {
                     )}
                   </td>
                   <td className="mono px-3 py-3 text-end text-mute">
-                    {m.batchDiscount ? `−${(1 - m.batchDiscount) * 100}%` : "—"}
+                    {m.batchDiscount != null ? `−${percentOff(m.batchDiscount)}%` : "—"}
                   </td>
                 </tr>
               );
