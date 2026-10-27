@@ -13,6 +13,27 @@ export function Footer() {
             <span className="display text-lg text-chalk">{t.footer.brand}</span>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-mute">{t.footer.blurb}</p>
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-mute">
+            {t.footer.creditLead}{" "}
+            <a
+              href="https://github.com/hoodini/token-billing-explained"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-chalk underline decoration-line underline-offset-2 transition-colors hover:text-cyan"
+            >
+              {t.footer.creditProject}
+            </a>{" "}
+            {t.footer.creditMid}{" "}
+            <a
+              href="https://yuv.ai/"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-chalk underline decoration-line underline-offset-2 transition-colors hover:text-cyan"
+            >
+              {t.footer.creditName}
+            </a>
+            .
+          </p>
         </div>
 
         <div>

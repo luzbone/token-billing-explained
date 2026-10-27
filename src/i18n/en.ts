@@ -518,6 +518,10 @@ export const en = {
     sources: "Official pricing sources · observed {{date}}",
     tokenizerNote:
       "Tokenizer: o200k_base (OpenAI). Other providers use different vocabularies, so their counts will differ.",
+    creditLead: "Based on",
+    creditProject: "Token Billing, Explained",
+    creditMid: "by",
+    creditName: "Yuval Avidani",
   },
 } as const;
 

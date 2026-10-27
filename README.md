@@ -6,6 +6,8 @@ An interactive, hands-on explainer for **how LLM APIs actually charge you** — 
 
 No signup, no API key, nothing sent anywhere. Everything runs in the browser.
 
+This site started from [Token Billing, Explained](https://github.com/hoodini/token-billing-explained) by [Yuval Avidani](https://yuv.ai/).
+
 ## Why
 
 Most people ship an AI feature, get an invoice, and only then discover that output costs 5× input, that a 30-turn chat costs far more than 30 messages, and that "enabling caching" made things *more* expensive. This app makes all of that visible and playable before it costs you money.

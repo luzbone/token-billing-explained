@@ -520,5 +520,9 @@ export const he: Dict = {
     sources: "מקורות תמחור רשמיים · נכון ל־{{date}}",
     tokenizerNote:
       "טוקנייזר: o200k_base (OpenAI). ספקים אחרים משתמשים באוצרות מילים שונים, כך שהספירות ישתנו.",
+    creditLead: "מבוסס על",
+    creditProject: "Token Billing, Explained",
+    creditMid: "של",
+    creditName: "יובל אבידני",
   },
 };
