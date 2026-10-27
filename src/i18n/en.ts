@@ -299,7 +299,7 @@ export const en = {
       },
       batch: {
         t: "Batch is the least-used discount",
-        b: "If your work isn't interactive — evals, backfills, summarising a corpus overnight — most providers cut input and output by 50%. xAI is the exception: Grok 4.3 is 20% off, and Grok 4.5 / 4.6 have no batch discount at all.",
+        b: "If your work isn't interactive — evals, backfills, summarising a corpus overnight — most providers cut input and output by 50%. xAI is the exception: Grok 4.3 through 4.7 are 20% off, and Grok Build 0.1 has no batch discount.",
       },
     },
   },
@@ -337,7 +337,7 @@ export const en = {
     outputPerCall: "Output per call",
     outputHint: "Include reasoning tokens — they're billed as output.",
     cachingEnabled: "Prompt caching enabled",
-    cachingHint: "Prefixes below a provider's minimum (1k–4k tokens) can't be cached at all.",
+    cachingHint: "Prefixes below a provider's minimum (512–4,096 tokens) can't be cached at all.",
     rebuilds: "Cache rebuilds / month",
     rebuildsHint:
       "Every idle gap past the TTL, deploy, or prompt edit forces a fresh write. 720 ≈ once an hour.",
@@ -401,12 +401,12 @@ export const en = {
       {
         t: "A cache miss is worse than no cache",
         s: "One shifting value at the top of your prompt and you pay the premium for nothing.",
-        b: "Prefix caching matches from the start of the request, on the tokenized prompt. Injecting the current time, a request UUID, or a randomly-ordered set of tool schemas near the top guarantees a miss on every call — so on providers that charge for writes you pay the surcharge repeatedly and never collect a discounted read. Prefixes below the provider's minimum (typically 1,024–4,096 tokens) aren't cached at all.",
+        b: "Prefix caching matches from the start of the request, on the tokenized prompt. Injecting the current time, a request UUID, or a randomly-ordered set of tool schemas near the top guarantees a miss on every call — so on providers that charge for writes you pay the surcharge repeatedly and never collect a discounted read. Prefixes below the provider's minimum (typically 512–4,096 tokens) aren't cached at all.",
       },
       {
         t: "Long-context tiers re-price the whole request",
         s: "Token 200,001 doesn't cost 2×. It makes all 200,001 cost 2×.",
-        b: "Several providers switch to a higher rate once a prompt crosses a threshold (200k on Gemini and Grok, 272k on some OpenAI models). The higher rate applies to the entire request, not just the overflow. Staying just under a threshold is worth real money.",
+        b: "Several providers switch to a higher rate once a prompt crosses a threshold (100k on Claude Haiku 5.5, 200k on Grok, 272k on current OpenAI models). The higher rate applies to the entire request, not just the overflow. Staying just under a threshold is worth real money.",
       },
       {
         t: "Failed and retried requests can still cost money",
@@ -467,7 +467,7 @@ export const en = {
       {
         q: "On Anthropic, writing a prefix to the 5-minute cache costs…",
         a: ["Nothing extra", "0.1× the input rate", "1.25× the input rate", "2× the output rate"],
-        why: "Cache writes cost 1.25× input for a 5-minute TTL and 2× for a 1-hour TTL. Reads then cost 0.1× input on most Claude models — 0.025× on Fable 5.1.",
+        why: "Cache writes cost 1.25× input for a 5-minute TTL and 2× for a 1-hour TTL. Reads then cost 0.1× input on Haiku 5.5, 0.05× on Opus 5.5 and Sonnet 5.5, and 0.025× on Fable 5.1.",
       },
       {
         q: "On Anthropic you write a 50k-token prefix to the 5-minute cache, then the cache expires with zero hits. Versus not caching, you…",
@@ -477,7 +477,7 @@ export const en = {
           "Paid 25% more on those tokens",
           "Paid nothing — writes are free",
         ],
-        why: "Anthropic's 5-minute cache write costs 1.25× input. With zero hits you collected no discounted reads, so you simply paid a 25% surcharge for nothing. On providers with no write premium (xAI) the same scenario would merely break even. Current OpenAI flagships now charge 1.25× on cache writes too.",
+        why: "Anthropic's 5-minute cache write costs 1.25× input. With zero hits you collected no discounted reads, so you simply paid a 25% surcharge for nothing. On providers with no write premium (xAI) the same scenario would merely break even. Current OpenAI flagships charge 1.25× for a 30-minute cache write and 2.5× for a 12-hour write.",
       },
       {
         q: "A reasoning model 'thinks' for 3,000 tokens before a 200-token answer. You are billed for…",
@@ -500,7 +500,7 @@ export const en = {
         why: "Long-context tiers re-price the whole request, not just the overflow. Trimming 500 tokens here would halve the call's cost.",
       },
       {
-        q: "A chatbot on Claude Sonnet 5 sends 2k input and generates 3k output per call. Which change cuts the bill most?",
+        q: "A chatbot on Claude Sonnet 5.5 sends 2k input and generates 3k output per call. Which change cuts the bill most?",
         a: [
           "Halve the input context (2k → 1k)",
           "Halve the output length (3k → 1.5k)",

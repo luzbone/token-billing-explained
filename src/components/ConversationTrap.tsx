@@ -27,7 +27,7 @@ function buildTurns(systemTokens: number, userTokens: number, replyTokens: numbe
 
 export function ConversationTrap() {
   const t = useT();
-  const [modelId, setModelId] = useState("claude-sonnet-5");
+  const [modelId, setModelId] = useState("claude-sonnet-5-5");
   const [systemTokens, setSystemTokens] = useState(4000);
   const [userTokens, setUserTokens] = useState(150);
   const [replyTokens, setReplyTokens] = useState(400);

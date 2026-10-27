@@ -21,7 +21,7 @@ Standard (non-batch) USD per 1M tokens. Ignore marketing pages, OpenRouter, and 
 
 Keep a compact teaching table: **one cheap, one mid, one frontier per provider**, plus the Google cheap floor if it is still the lowest input on the table.
 
-Target size: about **16–18 text chat models**. Current shape (2026-09-16): 4 Anthropic, 4 OpenAI, 5 Google, 4 xAI.
+Target size: about **16–18 text chat models**. Current shape (2026-10-27): 4 Anthropic, 4 OpenAI, 4 Google, 4 xAI.
 
 - Prefer each provider's **current** recommended lineup, not every SKU still on the API.
 - Replace a previous-gen row when the new model is the same role at a new id/price (Fable 5 → Fable 5.1, Gemini 3 Pro → 3.1 Pro).
@@ -39,16 +39,16 @@ Do not re-read the rest of the app.
 
 UI that already interpolates `PRICING_AS_OF`: Hero, pricing lede, Footer. No date edits needed there unless you rename the placeholder.
 
-Lab defaults (`claude-sonnet-5` in Cache Lab / Anatomy / Conversation Trap) can stay if that id still exists.
+Lab defaults (`claude-sonnet-5-5` in Cache Lab / Anatomy / Conversation Trap) can stay if that id still exists.
 
 ## Copy traps
 
 Grep `en.ts` / `he.ts` / model notes for leftover names and stale claims:
 
 - Quiz and notes that say a provider has **free cache writes** (OpenAI flagships charge 1.25× as of 2026-09; xAI still does not).
-- Claude cache-read **0.1× vs 0.025×** (Fable 5.1 is the cheap-read exception).
-- Quiz math that embeds a specific `$X / $Y` (Sonnet 5 Q8). Recalculate if that model's price moved.
-- Batch copy that says **everyone is 50% off** (xAI 4.3 was 20%; 4.5/4.6 had none).
+- Claude cache-read **0.1× vs 0.05× vs 0.025×** (Haiku 5.5 is 0.1×; Opus 5.5 and Sonnet 5.5 are 0.05×; Fable 5.1 is 0.025×).
+- Quiz math that embeds a specific `$X / $Y` (Sonnet 5.5 Q8, still $2 / $10). Recalculate if that model's price moved.
+- Batch copy that says **everyone is 50% off** (Grok 4.3 through 4.7 are 20% off; Grok Build 0.1 has none).
 - Scheduled price changes that already happened or were cancelled (the Sonnet 5 Sept 2026 increase did not occur).
 - Gemini `ID?` / `unverified` — do not bring that back; ids are on the models page.
 

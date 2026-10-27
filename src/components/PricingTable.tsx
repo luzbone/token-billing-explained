@@ -6,6 +6,12 @@ import { interpolate, useT } from "../i18n";
 
 type SortKey = "provider" | "input" | "output" | "cacheRead" | "ratio";
 
+/** Two decimals, or three when the rate needs a half-cent (0.125). */
+const perMtok = (n: number) => {
+  const milli = Math.round(n * 1000);
+  return `$${milli % 10 === 0 ? n.toFixed(2) : n.toFixed(3)}`;
+};
+
 export function PricingTable() {
   const t = useT();
   const [sort, setSort] = useState<SortKey>("input");
@@ -125,7 +131,9 @@ export function PricingTable() {
                         aria-hidden
                       />
                       <span>
-                        <span className="block font-semibold text-chalk">{m.label}</span>
+                        <span className="block font-semibold text-chalk" title={m.note}>
+                          {m.label}
+                        </span>
                         <span className="mono text-[11px] text-mute">{m.provider}</span>
                       </span>
                     </div>
@@ -140,9 +148,9 @@ export function PricingTable() {
                   <td className="mono px-3 py-3 text-end text-amber">
                     {m.cacheWrite5m !== null ? (
                       <>
-                        ${m.cacheWrite5m.toFixed(2)}
+                        {perMtok(m.cacheWrite5m)}
                         {m.cacheWrite1h !== null && (
-                          <span className="text-mute"> / ${m.cacheWrite1h.toFixed(2)}</span>
+                          <span className="text-mute"> / {perMtok(m.cacheWrite1h)}</span>
                         )}
                       </>
                     ) : m.cacheStoragePerHour ? (
@@ -172,7 +180,7 @@ export function PricingTable() {
                         className="block text-[10px] text-amber"
                         title={`Above ${num(m.longContext.threshold)} tokens: $${m.longContext.input} in / $${m.longContext.output} out`}
                       >
-                        2× &gt;{compact(m.longContext.threshold)}
+                        {+(m.longContext.input / m.input).toFixed(2)}× &gt;{compact(m.longContext.threshold)}
                       </span>
                     )}
                   </td>

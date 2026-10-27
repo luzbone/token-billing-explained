@@ -17,8 +17,8 @@ Most people ship an AI feature, get an invoice, and only then discover that outp
 | 01 | **Tokenizer Lab** | Real BPE tokenization (`o200k_base`). Watch prose, code, JSON, Hebrew, emoji and whitespace split into billable chips. Non-Latin text costs multiples more for identical meaning. |
 | 02 | **Anatomy of one call** | An animated meter for a single request, separating system prompt / tool schemas / history / user message on the input side, and hidden reasoning vs visible answer on the output side. |
 | 03 | **The conversation trap** | The API is stateless, so every turn re-uploads the whole history. Total input grows with the *square* of the turn count. Toggle caching and watch the bill collapse. |
-| 04 | **Cache Lab** | Cache write vs read vs TTL vs break-even. Models Anthropic's 1.25×/2× write multipliers, OpenAI's 1.25× writes on current flagships, xAI's free writes, and Google's hourly storage rental. Drag hits to zero and watch caching actively lose money. |
-| 05 | **Pricing table** | 17 models, sortable by input, output, out÷in ratio or cache read. Shows long-context cliffs and batch discounts. |
+| 04 | **Cache Lab** | Cache write vs read vs TTL vs break-even. Models Anthropic's 1.25× (5-minute) and 2× (1-hour) writes, OpenAI's 1.25× 30-minute and 2.5× 12-hour writes, xAI's free writes, and Google's hourly storage rental on explicit caches. Gemini 4 Argon is implicit-cache only. Drag hits to zero and watch caching actively lose money. |
+| 05 | **Pricing table** | 16 models, sortable by input, output, out÷in ratio or cache read. Shows long-context cliffs and batch discounts. |
 | 06 | **Workload calculator** | Four realistic app shapes (chatbot, RAG, coding agent, overnight batch). Stacked cost bars per model, and advice that adapts to whether you're input-bound or output-bound. |
 | 07 | **Gotchas** | Eight ways the invoice gets bigger than expected. |
 | 08 | **Quiz** | Eight questions with explanations. |
@@ -41,7 +41,7 @@ Production is the Cloudflare Worker `token-billing`, served at https://token.luz
 
 To refresh the catalog, follow [`docs/catalog-refresh.md`](docs/catalog-refresh.md). Prompt: *Follow docs/catalog-refresh.md. Refresh the catalog to today. Don't expand scope.*
 
-All prices live in [`src/lib/pricing.ts`](src/lib/pricing.ts) as USD per 1,000,000 tokens, standard (non-batch) tier. The observed date is the `PRICING_AS_OF` constant in that file — currently **2026-09-16** — and the UI reads it from there. Official sources:
+All prices live in [`src/lib/pricing.ts`](src/lib/pricing.ts) as USD per 1,000,000 tokens, standard (non-batch) tier. The observed date is the `PRICING_AS_OF` constant in that file — currently **2026-10-27** — and the UI reads it from there. Official sources:
 
 - [Anthropic](https://platform.claude.com/docs/en/about-claude/pricing)
 - [OpenAI](https://developers.openai.com/api/docs/pricing)

@@ -6,7 +6,7 @@ import { interpolate, useT } from "../i18n";
 
 export function CacheLab() {
   const t = useT();
-  const [modelId, setModelId] = useState("claude-sonnet-5");
+  const [modelId, setModelId] = useState("claude-sonnet-5-5");
   const [prefix, setPrefix] = useState(20000);
   const [hits, setHits] = useState(12);
   const [ttl, setTtl] = useState<"5m" | "1h">("5m");

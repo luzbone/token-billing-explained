@@ -20,7 +20,7 @@ const OUTPUT_TOTAL = REASONING + VISIBLE_OUT;
 
 export function RequestAnatomy() {
   const t = useT();
-  const [modelId, setModelId] = useState("claude-sonnet-5");
+  const [modelId, setModelId] = useState("claude-sonnet-5-5");
   const [phase, setPhase] = useState<Phase>("idle");
   const [progress, setProgress] = useState(0);
   const raf = useRef<number | undefined>(undefined);
